@@ -1,18 +1,18 @@
 document.getElementById('orderForm').addEventListener('submit', function(e) {
   e.preventDefault();
   
-  // Замените эти значения на свои!
-  const BOT_TOKEN = 'ВАШ_ТОКЕН_БОТА'; // Получить у @BotFather
-  const CHAT_ID = 'ВАШ_CHAT_ID'; // Получить у @userinfobot
+  // Р—Р°РјРµРЅРёС‚Рµ СЌС‚Рё Р·РЅР°С‡РµРЅРёСЏ РЅР° СЃРІРѕРё!
+  const BOT_TOKEN = '8157456768:AAFZBNtglu0NmUhe_bsEvOFfA0TdoAAnGmU'; // РџРѕР»СѓС‡РёС‚СЊ Сѓ @BotFather
+  const CHAT_ID = '6004271382'; // РџРѕР»СѓС‡РёС‚СЊ Сѓ @userinfobot
   
   const formData = new FormData(this);
   
-  const text = `?? Новая заявка на сайт:
-  ?? Имя: ${formData.get('name')}
-  ?? Telegram: ${formData.get('telegram')}
-  ?? Сообщение: ${formData.get('message')}`;
+  const text = `рџ“Њ РќРѕРІР°СЏ Р·Р°СЏРІРєР° РЅР° СЃР°Р№С‚:
+  рџ‘¤ РРјСЏ: ${formData.get('name')}
+  рџ“± Telegram: ${formData.get('telegram')}
+  вњ‰пёЏ РЎРѕРѕР±С‰РµРЅРёРµ: ${formData.get('message')}`;
 
-  // Отправка через Telegram API
+  // РћС‚РїСЂР°РІРєР° С‡РµСЂРµР· Telegram API
   fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
     method: 'POST',
     headers: {
@@ -26,11 +26,11 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
   })
   .then(response => response.json())
   .then(data => {
-    alert('? Заявка отправлена! Я свяжусь с вами в Telegram.');
+    alert('вњ… Р—Р°СЏРІРєР° РѕС‚РїСЂР°РІР»РµРЅР°! РЇ СЃРІСЏР¶СѓСЃСЊ СЃ РІР°РјРё РІ Telegram.');
     document.getElementById('orderForm').reset();
   })
   .catch(error => {
     console.error('Error:', error);
-    alert('? Ошибка отправки. Пожалуйста, напишите мне напрямую в Telegram.');
+    alert('вќЊ РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РЅР°РїРёС€РёС‚Рµ РјРЅРµ РЅР°РїСЂСЏРјСѓСЋ РІ Telegram.');
   });
 });
