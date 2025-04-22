@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <style>
+        .btn {
+    background: dodgerblue;
+    color: white;
+    padding: 10px 20px;
+    transition: background 0.3s ease;
+  }
+
+  .btn:hover {
+    background: darkblue;
+  }
+
+        .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 25vh;
+        }
+
+  .box {
+    background: tomato;
+    width: 150px;
+    height: 25px;
+        }
+
+        .criater {
+    background: tomato;
+    width: 400px;
+    height: 25px;
+        }
+          .mardersek {
+    background: tomato;
+    width: 240px;
+    height: 25px;
+        }
+
+        body {
+          background-color: #a204a7;
+          font-family: sans-serif;
+        }
+
+        .text {
+  font-family: Garamond, serif;
+  font-size: 1em;
+        }
+
+      h1 {
+          color: rgb(255, 255, 255);
+        }
+      
+        .highlight {
+  background-color: rgb(4, 31, 238);
+  color: rgb(255, 255, 255);
+  padding: 5px;
+  align-items: center;
+  border-radius: 5px;
+  }
+      </style>
+  <meta charset="UTF-8">
+  <title>Сайт сервера v1</title>
+</head>
+<body>
+  <img src="arzfun.png" alt="Arizona FUN">
+  <h2 class="highlight criater btn text">Всем привет! Это сайт АРЗ ФАН.</h2>
+  <h3 class="highlight box btn:hover">Пробный текст.</h3>
+  <p class="highlight mardersek">Я начинаю учить HTML и CSS.</p>
+  <a href="https://arzfun.com" target="_blank"><button class="btn">Нажми меня</button></a>
+</body>
+</html>
