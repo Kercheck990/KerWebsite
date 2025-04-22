@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URBAN MARKET | Продаж речей через Telegram</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a class="logo" href="#">URBAN MARKET</a>
+            <div class="nav-links">
+                <a href="#catalog">Каталог</a>
+                <a href="#sell">Продати</a>
+                <a href="#contacts">Контакти</a>
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeInDown">Продавайте та купуйте речі через Telegram</h1>
+            <p class="animate__animated animate__fadeInUp animate__delay-1s">Швидко, зручно та безпечно</p>
+            <a href="#catalog" class="btn tg-btn animate__animated animate__fadeInUp animate__delay-2s">
+                <i class="fab fa-telegram"></i> Перейти до каталогу
+            </a>
+        </div>
+        <div class="hero-image floating">
+            <img src="assets/images/hero.webp" alt="Приклад товару">
+        </div>
+    </section>
+
+    <section id="catalog" class="catalog">
+        <div class="container">
+            <h2>Каталог товарів</h2>
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Пошук...">
+                <select id="categoryFilter">
+                    <option value="all">Усі категорії</option>
+                    <option value="clothes">Одяг</option>
+                    <option value="electronics">Електроніка</option>
+                    <option value="books">Книги</option>
+                </select>
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2>Як це працює?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Вибираєте товар</h3>
+                    <p>Знайдіть те, що вам подобається</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Зв'язуєтесь через Telegram</h3>
+                    <p>Натисніть кнопку "Написати продавцю"</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Домовляєтесь про угоду</h3>
+                    <p>Обговоріть деталі з продавцем</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sell" class="sell">
+        <div class="container">
+            <h2>Хочете продати свою річ?</h2>
+            <div id="tgAuthWidget"></div>
+            <div id="productForm" style="display:none;">
+                <form id="addProductForm">
+                    <input type="text" placeholder="Назва товару" required>
+                    <textarea placeholder="Опис товару" required></textarea>
+                    <input type="number" placeholder="Ціна (?)" required>
+                    <input type="file" id="productImage" accept="image/*">
+                    <button type="submit" class="btn tg-btn">Додати товар</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts" class="contacts">
+        <div class="container">
+            <h2>Зв'яжіться з нами</h2>
+            <p>Є питання? Напишіть нам у Telegram!</p>
+            <a href="https://t.me/yourmarketbot" class="btn tg-btn" id="tgSupportBtn">
+                <i class="fab fa-telegram"></i> Написати в підтримку
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 URBAN MARKET. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <script src="js/telegram.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
