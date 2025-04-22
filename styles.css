@@ -107,6 +107,26 @@ button {
   cursor: pointer;
 }
 
+header {
+  position: relative;
+  padding: 20px 0;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.logo {
+  max-width: 150px; /* Регулируйте размер */
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05); /* Эффект при наведении */
+}
+
 button:hover {
   background-color: #005fa3;
 }
