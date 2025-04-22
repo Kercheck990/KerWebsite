@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <!-- ... (аналогічно index.html) ... -->
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <header class="header">
+    <!-- ... (як в index.html) ... -->
+    <div class="user-menu">
+      <span id="userName"></span>
+      <button id="logoutBtn">Вийти</button>
+    </div>
+  </header>
+
+  <main class="cabinet-container">
+    <h1>Особистий кабінет</h1>
+    
+    <div class="cabinet-grid">
+      <section class="profile-section">
+        <h2>Профіль</h2>
+        <form id="profileForm">
+          <div class="form-group">
+            <label>Ім'я:</label>
+            <input type="text" id="editFirstName">
+          </div>
+          <!-- ... інші поля ... -->
+          <button type="submit" class="btn">Зберегти</button>
+        </form>
+      </section>
+
+      <section class="stats-section">
+        <h2>Статистика</h2>
+        <div class="stats-cards">
+          <div class="stat-card">
+            <h3>Всього замовлень</h3>
+            <p id="totalOrders">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Дата реєстрації</h3>
+            <p id="regDate">-</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="orders-section">
+        <h2>Історія замовлень</h2>
+        <table id="ordersTable">
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>Товар</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/db.js"></script>
+  <script src="js/cabinet.js"></script>
+</body>
+</html>
