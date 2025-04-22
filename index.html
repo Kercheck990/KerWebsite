@@ -1,58 +1,56 @@
 <!DOCTYPE html>
-<html lang="uk" data-theme="dark">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Олексій MARKET | Продаж речей через Telegram</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Олексій Маркет - Продаж речей через Telegram</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar">
+    <header class="header">
         <div class="container">
-            <a class="logo" href="#">Олексій MARKET</a>
-            <div class="nav-links">
-                <a href="#catalog">Каталог</a>
-                <a href="#sell">Продати</a>
-                <a href="#contacts">Контакти</a>
-                <div class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </div>
-            </div>
+            <div class="logo">Олексій Маркет</div>
+            <nav class="nav">
+                <a href="#products">Товари</a>
+                <a href="#how-it-works">Як це працює?</a>
+                <a href="#order">Замовити</a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
     <section class="hero">
         <div class="container">
-            <h1 class="animate__animated animate__fadeInDown">Продавайте та купуйте речі через Telegram</h1>
-            <p class="animate__animated animate__fadeInUp animate__delay-1s">Швидко, зручно та безпечно</p>
-            <a href="#catalog" class="btn tg-btn animate__animated animate__fadeInUp animate__delay-2s">
-                <i class="fab fa-telegram"></i> Перейти до каталогу
-            </a>
-        </div>
-        <div class="hero-image floating">
-            <img src="приклад.png" alt="Приклад товару">
+            <h1>Продаж речей через Telegram</h1>
+            <p>Залишайте заявку на сайті - отримуйте відповідь у Telegram</p>
+            <a href="#order" class="btn">Залишити заявку</a>
         </div>
     </section>
 
-    <section id="catalog" class="catalog">
+    <section id="products" class="products">
         <div class="container">
-            <h2>Каталог товарів</h2>
-            <div class="filters">
-                <input type="text" id="searchInput" placeholder="Пошук...">
-                <select id="categoryFilter">
-                    <option value="all">Усі категорії</option>
-                    <option value="clothes">Одяг</option>
-                    <option value="electronics">Електроніка</option>
-                    <option value="books">Книги</option>
-                </select>
+            <h2>Наші товари</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="assets/images/product1.jpg" alt="Товар 1">
+                    <h3>Назва товару</h3>
+                    <p class="price">1200 ₴</p>
+                </div>
+                <div class="product-card">
+                    <img src="assets/images/product2.jpg" alt="Товар 2">
+                    <h3>Назва товару</h3>
+                    <p class="price">8500 ₴</p>
+                </div>
+                <div class="product-card">
+                    <img src="assets/images/product3.jpg" alt="Товар 3">
+                    <h3>Назва товару</h3>
+                    <p class="price">1500 ₴</p>
+                </div>
             </div>
-            <div class="products-grid" id="productsGrid"></div>
         </div>
     </section>
 
-    <section class="how-it-works">
+    <section id="how-it-works" class="how-it-works">
         <div class="container">
             <h2>Як це працює?</h2>
             <div class="steps">
@@ -63,51 +61,68 @@
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Зв'язуєтесь через Telegram</h3>
-                    <p>Натисніть кнопку "Написати продавцю"</p>
+                    <h3>Залишаєте заявку</h3>
+                    <p>Заповніть просту форму на сайті</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Домовляєтесь про угоду</h3>
-                    <p>Обговоріть деталі з продавцем</p>
+                    <h3>Отримуєте відповідь</h3>
+                    <p>Власник зв'яжеться з вами у Telegram</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="sell" class="sell">
+    <section id="order" class="order-form">
         <div class="container">
-            <h2>Хочете продати свою річ?</h2>
-            <div id="tgAuthWidget"></div>
-            <div id="productForm" style="display:none;">
-                <form id="addProductForm">
-                    <input type="text" placeholder="Назва товару" required>
-                    <textarea placeholder="Опис товару" required></textarea>
-                    <input type="number" placeholder="Ціна (₴)" required>
-                    <input type="file" id="productImage" accept="image/*">
-                    <button type="submit" class="btn tg-btn">Додати товар</button>
-                </form>
-            </div>
+            <h2>Форма замовлення</h2>
+            <form id="requestForm">
+                <div class="form-group">
+                    <label for="name">Ваше ім'я *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact">Контактні дані *</label>
+                    <div class="contact-input">
+                        <select id="contactType" name="contactType">
+                            <option value="telegram">Telegram</option>
+                            <option value="phone">Телефон</option>
+                        </select>
+                        <input type="text" id="contact" name="contact" required 
+                               placeholder="Наприклад: @username або 991234567">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product">Оберіть товар *</label>
+                    <select id="product" name="product" required>
+                        <option value="">-- Оберіть товар --</option>
+                        <option value="Кросівки білі">Кросівки білі - 1200 ₴</option>
+                        <option value="Смартфон">Смартфон - 8500 ₴</option>
+                        <option value="Куртка джинсова">Куртка джинсова - 1500 ₴</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">Додаткові побажання</label>
+                    <textarea id="comment" name="comment" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fab fa-telegram"></i> Надіслати заявку
+                </button>
+            </form>
         </div>
     </section>
 
-    <section id="contacts" class="contacts">
+    <footer class="footer">
         <div class="container">
-            <h2>Зв'яжіться з нами</h2>
-            <p>Є питання? Напишіть нам у Telegram!</p>
-            <a href="https://t.me/yourmarketbot" class="btn tg-btn" id="tgSupportBtn">
-                <i class="fab fa-telegram"></i> Написати в підтримку
-            </a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>© 2025 Олексій MARKET. Всі права захищені.</p>
+            <p>© 2025 Олексій Маркет. Всі права захищені.</p>
+            <p>Зв'язатися з нами: Ніяк потомушо отак</p>
         </div>
     </footer>
 
-    <script src="js/telegram.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
