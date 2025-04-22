@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Налаштування
-    const BOT_TOKEN = 'ВАШ_ТОКЕН_БОТА';
-    const CHAT_ID = 'ID_ЧАТУ'; // ID групи або вашого чату
+    const BOT_TOKEN = '8157456768:AAFZBNtglu0NmUhe_bsEvOFfA0TdoAAnGmU';
+    const CHAT_ID = '6004271382'; // ID групи або вашого чату
     
     // Зміна плейсхолдера для контакту
     document.getElementById('contactType').addEventListener('change', function() {
