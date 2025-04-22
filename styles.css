@@ -130,34 +130,3 @@ header {
 button:hover {
   background-color: #005fa3;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-  background-image: url('images/your-background.jpg'); /* Путь к вашей картинке */
-  background-size: cover; /* Растягивает на весь экран */
-  background-position: center; /* Центрирует */
-  background-attachment: fixed; /* Фиксирует фон при прокрутке */
-  background-repeat: no-repeat; /* Убирает повторение */
-  min-height: 100vh; /* На всю высоту экрана */
-}
-
-/* Затемнение фона для лучшей читаемости текста */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Чёрный с прозрачностью 50% */
-  z-index: -1;
-}
-
-/* Чтобы текст оставался читаемым */
-header, section, footer {
-  background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый */
-  padding: 20px;
-  margin: 20px;
-  border-radius: 10px;
-}
