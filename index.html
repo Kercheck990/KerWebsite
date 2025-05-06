@@ -3,17 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вход</title>
-  <link rel="stylesheet" href="style.css">
+  <title>ARZFUN Leaders</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="login-container" id="loginContainer">
+  <div class="intro-container" id="introContainer">
+    <h2>Кто вы?</h2>
+    <button class="green-button" onclick="selectGroup('grove')">Groove</button>
+    <button class="purple-button" onclick="selectGroup('ballas')">Ballas</button>
+  </div>
+
+  <div class="login-container hidden" id="loginContainer">
     <h2>Вход для лидера</h2>
+    <p id="groupName"></p>
     <input type="password" id="adminPassword" placeholder="Введите пароль" />
     <button onclick="login()">Войти</button>
     <p id="loginError" class="error-message hidden">Неверный пароль!</p>
   </div>
 
-  <script src="script.js"></script>
+  <div class="main-container hidden" id="mainContainer">
+    <h1>Лидерская система ARZFUN</h1>
+    <div class="leader-card" id="ballas">
+      <h2>Баллас</h2>
+      <p><strong>Лидер:</strong> <span contenteditable="true">Никита_Лидер</span></p>
+      <p><strong>Заместитель:</strong> <span contenteditable="true">Андрей_Зам</span></p>
+      <p><strong>Срок:</strong> <span contenteditable="true">до 10.05.2025</span></p>
+    </div>
+    <div class="leader-card" id="grove">
+      <h2>Грув</h2>
+      <p><strong>Лидер:</strong> <span contenteditable="true">Алексей_Лидер</span></p>
+      <p><strong>Заместитель:</strong> <span contenteditable="true">Иван_Зам</span></p>
+      <p><strong>Срок:</strong> <span contenteditable="true">до 15.05.2025</span></p>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
 </body>
 </html>
