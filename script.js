@@ -1,32 +1,48 @@
 console.log("Script загружен и выполняется");
 
 const ADMIN_PASSWORD = "supersecret"; // Пароль для админки
-const LEADER_PASSWORD = "123123123"; // Пароль для лидера
+const GROVE_PASSWORD = "grovepass"; // Пароль для Groove
+const BALLAS_PASSWORD = "ballaspass"; // Пароль для Ballas
+let selectedGroup = null;
+
+function selectGroup(group) {
+  selectedGroup = group;
+  document.getElementById("introContainer").classList.add("hidden");
+  document.getElementById("loginContainer").classList.remove("hidden");
+
+  // Отображаем название группы на экране
+  document.getElementById("groupName").innerText = `Пароль для ${group.charAt(0).toUpperCase() + group.slice(1)}`;
+
+  // Очистим поле ввода пароля и скрыть сообщение об ошибке
+  document.getElementById("adminPassword").value = "";
+  document.getElementById("loginError").classList.add("hidden");
+}
 
 function login() {
-  const password = document.getElementById("adminPassword").value;
-  if (password === LEADER_PASSWORD) {
-    window.location.href = "leaderPanel.html"; // Переход в панель лидера
+  const password = document.getElementById("adminPassword").value.trim();
+
+  // Проверяем правильность пароля в зависимости от выбранной группы
+  if (selectedGroup === "grove" && password === GROVE_PASSWORD) {
+    showLeaderPanel();
+  } else if (selectedGroup === "ballas" && password === BALLAS_PASSWORD) {
+    showLeaderPanel();
   } else {
     document.getElementById("loginError").classList.remove("hidden");
   }
 }
 
-function goToAdminPanel() {
-  window.location.href = "adminPanel.html"; // Переход в админ панель
-}
+function showLeaderPanel() {
+  document.getElementById("loginContainer").classList.add("hidden");
+  document.getElementById("mainContainer").classList.remove("hidden");
 
-function accessAdminPanel() {
-  const password = document.getElementById("adminPassword").value;
-  if (password === ADMIN_PASSWORD) {
-    window.location.href = "adminPanel.html"; // Переход в админ панель
-  } else {
-    document.getElementById("adminLoginError").classList.remove("hidden");
+  // Показываем только выбранную группу
+  if (selectedGroup === "grove") {
+    document.getElementById("grove").style.display = "block";
+    document.getElementById("ballas").style.display = "none";
+  } else if (selectedGroup === "ballas") {
+    document.getElementById("ballas").style.display = "block";
+    document.getElementById("grove").style.display = "none";
   }
-}
-
-function goToManageUsers() {
-  window.location.href = "manageUsers.html"; // Переход в страницу управления пользователями
 }
 
 function editUser() {
