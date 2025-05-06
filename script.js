@@ -1,5 +1,5 @@
 const ADMIN_PASSWORD = "supersecret"; // Пароль для админки
-const LEADER_PASSWORD = "leaderpass"; // Пароль для лидера
+const LEADER_PASSWORD = "123123123"; // Пароль для лидера
 
 function login() {
   const password = document.getElementById("adminPassword").value;
