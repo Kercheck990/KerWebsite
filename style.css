@@ -15,13 +15,37 @@ h1, h2 {
   text-align: center;
 }
 
-.login-container {
-  background-color: #1e1e1e;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+button {
+  padding: 10px 20px;
+  background-color: #03a9f4;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0288d1;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.main-container, .admin-login-container, .manage-users-container {
   width: 300px;
   text-align: center;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 input {
@@ -34,48 +58,12 @@ input {
   color: #f1f1f1;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #03a9f4;
-  color: white;
-  border: none;
-  cursor: pointer;
+select {
+  padding: 10px;
+  margin: 10px 0;
   width: 80%;
   border-radius: 5px;
-}
-
-button:hover {
-  background-color: #0288d1;
-}
-
-.hidden {
-  display: none;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-  display: block;
-}
-
-.main-container {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.leader-card {
-  background-color: #1e1e1e;
   border: 1px solid #333;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 15px;
-  width: 300px;
-  transition: transform 0.3s ease;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.leader-card:hover {
-  transform: scale(1.05);
+  background-color: #222;
+  color: #f1f1f1;
 }
