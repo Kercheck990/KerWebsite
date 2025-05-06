@@ -1,3 +1,5 @@
+console.log("Script загружен и выполняется");
+
 const ADMIN_PASSWORD = "supersecret"; // Пароль для админки
 const LEADER_PASSWORD = "123123123"; // Пароль для лидера
 
