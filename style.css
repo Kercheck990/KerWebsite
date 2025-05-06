@@ -7,35 +7,31 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 h1, h2 {
   text-align: center;
 }
 
-.leader-card {
-  background-color: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 15px;
-  width: 300px;
-  transition: transform 0.3s ease;
-}
-
-.leader-card:hover {
-  transform: scale(1.03);
-}
-
 .login-container {
-  margin-top: 50px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  width: 300px;
   text-align: center;
 }
 
 input {
-  padding: 8px;
+  padding: 10px;
   margin: 10px 0;
-  width: 200px;
+  width: 80%;
+  border-radius: 5px;
+  border: 1px solid #333;
+  background-color: #222;
+  color: #f1f1f1;
 }
 
 button {
@@ -44,6 +40,8 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+  width: 80%;
+  border-radius: 5px;
 }
 
 button:hover {
@@ -57,4 +55,27 @@ button:hover {
 .error-message {
   color: red;
   margin-top: 10px;
+  display: block;
+}
+
+.main-container {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leader-card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 15px;
+  width: 300px;
+  transition: transform 0.3s ease;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.leader-card:hover {
+  transform: scale(1.05);
 }
