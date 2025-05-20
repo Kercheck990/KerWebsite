@@ -1,51 +1,54 @@
-console.log("Script загружен и выполняется");
+const items = [];
 
-const ADMIN_PASSWORD = "supersecret"; // Пароль для админки
-const GROVE_PASSWORD = "grovepass"; // Пароль для Groove
-const BALLAS_PASSWORD = "ballaspass"; // Пароль для Ballas
-let selectedGroup = null;
-
-function selectGroup(group) {
-  selectedGroup = group;
-  document.getElementById("introContainer").classList.add("hidden");
-  document.getElementById("loginContainer").classList.remove("hidden");
-
-  // Отображаем название группы на экране
-  document.getElementById("groupName").innerText = `Пароль для ${group.charAt(0).toUpperCase() + group.slice(1)}`;
-
-  // Очистим поле ввода пароля и скрыть сообщение об ошибке
-  document.getElementById("adminPassword").value = "";
-  document.getElementById("loginError").classList.add("hidden");
+function toggleModal() {
+  const modal = document.getElementById('registerModal');
+  modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
 }
 
-function login() {
-  const password = document.getElementById("adminPassword").value.trim();
+function registerUser() {
+  const name = document.getElementById('regName').value;
+  const telegram = document.getElementById('regTelegram').value;
+  const password = document.getElementById('regPassword').value;
 
-  // Проверяем правильность пароля в зависимости от выбранной группы
-  if (selectedGroup === "grove" && password === GROVE_PASSWORD) {
-    showLeaderPanel();
-  } else if (selectedGroup === "ballas" && password === BALLAS_PASSWORD) {
-    showLeaderPanel();
+  if (name && telegram && password) {
+    alert('Регистрация успешна!');
+    toggleModal();
   } else {
-    document.getElementById("loginError").classList.remove("hidden");
+    alert('Пожалуйста, заполните все поля.');
   }
 }
 
-function showLeaderPanel() {
-  document.getElementById("loginContainer").classList.add("hidden");
-  document.getElementById("mainContainer").classList.remove("hidden");
+function addItem() {
+  const category = document.getElementById('categorySelect').value;
+  const title = document.getElementById('title').value;
+  const description = document.getElementById('description').value;
+  const price = document.getElementById('price').value;
 
-  // Показываем только выбранную группу
-  if (selectedGroup === "grove") {
-    document.getElementById("grove").style.display = "block";
-    document.getElementById("ballas").style.display = "none";
-  } else if (selectedGroup === "ballas") {
-    document.getElementById("ballas").style.display = "block";
-    document.getElementById("grove").style.display = "none";
+  if (title && description && price && category) {
+    items.push({ category, title, description, price });
+    showItems();
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('price').value = '';
+  } else {
+    alert('Заполните все поля.');
   }
 }
 
-function editUser() {
-  const user = document.getElementById("userSelect").value;
-  alert(`Редактирование пользователя: ${user}`); // Здесь можно добавить логику редактирования
+function showItems() {
+  const selectedCategory = document.getElementById('categorySelect').value;
+  const container = document.getElementById('itemsContainer');
+  const form = document.getElementById('itemForm');
+  const list = document.getElementById('itemList');
+  container.innerHTML = '';
+
+  form.style.display = selectedCategory ? 'block' : 'none';
+  list.style.display = selectedCategory ? 'block' : 'none';
+
+  items.filter(item => item.category === selectedCategory).forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `<h3>${item.title}</h3><p>${item.description}</p><p><strong>Цена:</strong> ${item.price}</p>`;
+    container.appendChild(div);
+  });
 }
