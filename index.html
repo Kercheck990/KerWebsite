@@ -3,37 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARZFUN Leaders</title>
+  <title>Игровой Маркет</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="intro-container" id="introContainer">
-    <h2>Кто вы?</h2>
-    <button class="green-button" onclick="selectGroup('grove')">Groove</button>
-    <button class="purple-button" onclick="selectGroup('ballas')">Ballas</button>
-  </div>
+  <header>
+    <h1>Игровой Маркет</h1>
+    <button class="register-btn" onclick="toggleModal()">Регистрация</button>
+  </header>
 
-  <div class="login-container hidden" id="loginContainer">
-    <h2>Вход для лидера</h2>
-    <p id="groupName"></p>
-    <input type="password" id="adminPassword" placeholder="Введите пароль" />
-    <button onclick="login()">Войти</button>
-    <p id="loginError" class="error-message hidden">Неверный пароль!</p>
-  </div>
+  <main class="container">
+    <select class="category-select" id="categorySelect" onchange="showItems()">
+      <option value="">Выберите категорию</option>
+      <option value="Машина">Машина</option>
+      <option value="Аксессуар">Аксессуар</option>
+      <option value="Дом">Дом</option>
+      <option value="Бизнес">Бизнес</option>
+      <option value="Услуги">Услуги</option>
+    </select>
 
-  <div class="main-container hidden" id="mainContainer">
-    <h1>Лидерская система ARZFUN</h1>
-    <div class="leader-card" id="ballas">
-      <h2>Баллас</h2>
-      <p><strong>Лидер:</strong> <span contenteditable="true">Никита_Лидер</span></p>
-      <p><strong>Заместитель:</strong> <span contenteditable="true">Андрей_Зам</span></p>
-      <p><strong>Срок:</strong> <span contenteditable="true">до 10.05.2025</span></p>
+    <div class="item-form" id="itemForm">
+      <input type="text" id="title" placeholder="Название предмета">
+      <textarea id="description" placeholder="Описание"></textarea>
+      <input type="number" id="price" placeholder="Цена (в игровых монетах)">
+      <button onclick="addItem()">Добавить</button>
     </div>
-    <div class="leader-card" id="grove">
-      <h2>Грув</h2>
-      <p><strong>Лидер:</strong> <span contenteditable="true">Алексей_Лидер</span></p>
-      <p><strong>Заместитель:</strong> <span contenteditable="true">Иван_Зам</span></p>
-      <p><strong>Срок:</strong> <span contenteditable="true">до 15.05.2025</span></p>
+
+    <div class="item-list" id="itemList">
+      <h2>Объявления</h2>
+      <div id="itemsContainer"></div>
+    </div>
+  </main>
+
+  <div class="modal" id="registerModal">
+    <div class="modal-content">
+      <h3>Регистрация</h3>
+      <input type="text" placeholder="Ник" id="regName">
+      <input type="text" placeholder="Telegram @юзер" id="regTelegram">
+      <input type="password" placeholder="Пароль" id="regPassword">
+      <button onclick="registerUser()">Зарегистрироваться</button>
+      <div class="login-link">Уже есть аккаунт? <a href="#">Войти</a></div>
     </div>
   </div>
 
