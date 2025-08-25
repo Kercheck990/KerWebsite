@@ -1,311 +1,46 @@
-<!doctype html>
+<!-- index.html -->
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grove & Ballas Panel</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#0f1115] text-gray-200">
-  <div id="app" class="min-h-screen flex">
-    <!-- Sidebar -->
-    <aside class="w-60 bg-[#0b0d12] border-r border-gray-800 p-4 space-y-2">
-      <h1 class="text-xl font-bold flex items-center gap-2"><span class="inline-block w-3 h-3 bg-gray-500 rounded"></span> Leaders</h1>
-      <nav class="space-y-1">
-        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('leaders')">Руководство</button>
-        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('admin')">Админ-панель</button>
-        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('login')">Войти</button>
-      </nav>
-      <div class="pt-6 text-xs opacity-70">Демо-панель (Grove & Ballas)</div>
-    </aside>
+<body>
+  <div class="login-screen" id="loginScreen">
+    <h2>Вход</h2>
+    <input type="text" id="username" placeholder="Логин">
+    <input type="password" id="password" placeholder="Пароль">
+    <button onclick="login()">Войти</button>
+    <p id="loginError" class="error"></p>
+  </div>
 
-    <!-- Content -->
-    <main class="flex-1 p-6">
-      <div id="view"></div>
+  <div class="panel hidden" id="panel">
+    <header>
+      <h1 id="factionName">Фракция</h1>
+      <button onclick="logout()">Выйти</button>
+    </header>
+
+    <nav>
+      <button onclick="showSection('leader')">Лидер</button>
+      <button onclick="showSection('logs')">Логи</button>
+    </nav>
+
+    <main>
+      <section id="leaderSection" class="hidden">
+        <h2>Лидер</h2>
+        <div id="leaderInfo"></div>
+      </section>
+
+      <section id="logsSection" class="hidden">
+        <h2>Логи</h2>
+        <ul id="logsList"></ul>
+      </section>
     </main>
   </div>
 
-<script>
-const API = location.origin + "/api";
-let auth = { token: localStorage.getItem("token") || null, user: JSON.parse(localStorage.getItem("user") || "null") };
-
-function setAuth(a){
-  auth = a;
-  if(a?.token){ localStorage.setItem("token", a.token); localStorage.setItem("user", JSON.stringify(a.user)); }
-  else { localStorage.removeItem("token"); localStorage.removeItem("user"); }
-  render();
-}
-
-function fmtTime(sec){
-  sec = Math.floor(sec || 0);
-  const h = Math.floor(sec/3600).toString().padStart(2,'0');
-  const m = Math.floor((sec%3600)/60).toString().padStart(2,'0');
-  const s = (sec%60).toString().padStart(2,'0');
-  return `${h}:${m}:${s}`;
-}
-
-async function api(path, opts={}){
-  const headers = {"Content-Type":"application/json", ...(auth.token ? {"Authorization":"Bearer "+auth.token}: {})};
-  const res = await fetch(API+path, {...opts, headers});
-  if(!res.ok) throw new Error((await res.json()).error || res.statusText);
-  return res.json();
-}
-
-function route(name, params={}){
-  history.pushState({name, params}, "", "#"+name+(params.id?("/"+params.id):""));
-  render();
-}
-
-window.onpopstate = render;
-document.addEventListener("DOMContentLoaded", ()=>{
-  const h = location.hash.slice(1).split("/");
-  const r = h[0] || "leaders";
-  const id = h[1];
-  route(r, id ? {id} : {});
-});
-
-async function render(){
-  const container = document.getElementById("view");
-  const { name, params } = history.state || {name:"leaders", params:{}};
-
-  if(name === "login"){
-    container.innerHTML = `
-      <div class="max-w-md">
-        <h2 class="text-2xl font-bold mb-4">Войти</h2>
-        <form id="loginForm" class="space-y-3">
-          <input class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2" name="username" placeholder="Логин" required>
-          <input class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2" type="password" name="password" placeholder="Пароль" required>
-          <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded">Войти</button>
-          <p class="text-xs opacity-70">Демо: admin/admin123 или grove_lead/demo123</p>
-        </form>
-      </div>`;
-    document.getElementById("loginForm").onsubmit = async (e)=>{
-      e.preventDefault();
-      const f = new FormData(e.target);
-      try{
-        const data = await api("/auth/login",{method:"POST", body: JSON.stringify({username:f.get('username'), password:f.get('password')})});
-        setAuth(data);
-        route("leaders");
-      }catch(err){ alert("Ошибка входа: "+err.message); }
-    };
-    return;
-  }
-
-  if(name === "leaders"){
-    const leaders = await api("/leaders");
-    container.innerHTML = `
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-2xl font-bold">Список руководителей</h2>
-        <input id="search" class="bg-gray-900 border border-gray-700 rounded px-3 py-2" placeholder="Поиск по нику...">
-      </div>
-      <div class="overflow-x-auto rounded-lg border border-gray-800">
-        <table class="min-w-full text-sm">
-          <thead class="bg-gray-900 text-gray-400">
-            <tr>
-              <th class="px-3 py-2 text-left">#</th>
-              <th class="px-3 py-2 text-left">Руководитель</th>
-              <th class="px-3 py-2 text-left">Фракция</th>
-              <th class="px-3 py-2 text-left">Дни</th>
-              <th class="px-3 py-2 text-left">Баллы</th>
-              <th class="px-3 py-2 text-left">Выгов.</th>
-              <th class="px-3 py-2 text-left">Онлайн</th>
-            </tr>
-          </thead>
-          <tbody id="tbody" class="divide-y divide-gray-800"></tbody>
-        </table>
-      </div>`;
-    const tbody = document.getElementById("tbody");
-    function rowHTML(i, r){
-      return `<tr class="hover:bg-gray-900">
-        <td class="px-3 py-2">${i+1}</td>
-        <td class="px-3 py-2"><button class="text-indigo-400 hover:underline" onclick="route('leader',{id:${r.id}})">${r.username}</button></td>
-        <td class="px-3 py-2"><span class="px-2 py-1 rounded text-xs" style="background:${r.faction_color}22;color:${r.faction_color}">${r.faction_name}</span></td>
-        <td class="px-3 py-2">${r.days_current}/${r.days_total}</td>
-        <td class="px-3 py-2">${r.points}</td>
-        <td class="px-3 py-2">${r.warns}/3</td>
-        <td class="px-3 py-2">${fmtTime(r.online_seconds_week)}</td>
-      </tr>`;
-    }
-    leaders.forEach((r,i)=> tbody.insertAdjacentHTML('beforeend', rowHTML(i,r)));
-    document.getElementById("search").addEventListener("input", (e)=>{
-      const q = e.target.value.toLowerCase();
-      tbody.querySelectorAll("tr").forEach(tr=>{
-        tr.style.display = tr.textContent.toLowerCase().includes(q) ? "" : "none";
-      });
-    });
-    return;
-  }
-
-  if(name === "leader"){
-    const id = params.id;
-    const data = await api("/leaders/"+id);
-    const {user, stats, logs} = data;
-    container.innerHTML = `
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <section class="lg:col-span-2 space-y-4">
-          <div class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-            <div class="flex items-center gap-4">
-              <div class="w-16 h-16 rounded-full bg-gray-800 overflow-hidden flex items-center justify-center text-2xl">👤</div>
-              <div>
-                <div class="text-xl font-semibold">${user.username}</div>
-                <div class="text-sm opacity-70">${user.faction_name}</div>
-              </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-              <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">Онлайн за неделю</div>
-                <div class="text-lg font-bold">${fmtTime(stats.online_seconds_week)}</div>
-              </div>
-              <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">КПД</div>
-                <div class="text-lg font-bold">${(stats.efficiency||0).toFixed(2)}</div>
-              </div>
-              <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">Предупреждения</div>
-                <div class="text-lg font-bold">${stats.cautions}/${stats.cautions_limit}</div>
-              </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">Принято за неделю</div>
-                <div class="text-lg font-bold">${stats.accepted_week}</div>
-              </div>
-              <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">Повышено за неделю</div>
-                <div class="text-lg font-bold">${stats.promoted_week}</div>
-              </div>
-              <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">Уволено за неделю</div>
-                <div class="text-lg font-bold">${stats.fired_week}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
-            <div class="px-5 py-3 border-b border-gray-800 flex items-center justify-between">
-              <div class="font-semibold">Изменения руководителя</div>
-              ${(auth.user && (auth.user.role==='admin' || auth.user.role==='leader'))?`<form id="addLog" class="flex gap-2">
-                <input name="msg" class="bg-gray-800 rounded px-3 py-1" placeholder="Новое изменение...">
-                <button class="px-3 py-1 bg-indigo-600 rounded">Добавить</button>
-              </form>`:""}
-            </div>
-            <div class="p-0">
-              ${logs.map(l=>`<div class="px-5 py-3 border-t border-gray-800 text-sm"><span class="opacity-70">${new Date(l.created_at).toLocaleString()}</span> — ${l.message}</div>`).join('')}
-            </div>
-          </div>
-        </section>
-
-        <aside class="space-y-4">
-          <div class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-            <div class="font-semibold mb-2">Общая информация</div>
-            <div class="grid grid-cols-2 gap-2 text-sm">
-              <div class="opacity-70">Баллы</div><div>${stats.points}</div>
-              <div class="opacity-70">Дни</div><div>${stats.days_current}/${stats.days_total}</div>
-              <div class="opacity-70">Выговоры</div><div>${stats.warns}/${stats.warns_limit}</div>
-            </div>
-          </div>
-          ${auth.user?.role==='admin' ? `<div class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-            <div class="font-semibold mb-2">Админ-редактор</div>
-            <form id="editStats" class="space-y-2 text-sm">
-              <input name="points" placeholder="Баллы" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="days_current" placeholder="Дни (текущие)" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="days_total" placeholder="Дни (всего)" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="warns" placeholder="Выговоры" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="online_seconds_week" placeholder="Онлайн (сек)" class="w-full bg-gray-800 rounded px-3 py-1">
-              <button class="px-3 py-1 bg-emerald-600 rounded">Сохранить</button>
-            </form>
-          </div>` : ""}
-        </aside>
-      </div>`;
-
-    const addLogForm = document.getElementById("addLog");
-    if(addLogForm){
-      addLogForm.onsubmit = async (e)=>{
-        e.preventDefault();
-        const msg = new FormData(addLogForm).get("msg");
-        if(!msg) return;
-        try{
-          await api(`/admin/leader/${id}/log`, {method:"POST", body: JSON.stringify({message: msg})});
-          route("leader", {id});
-        }catch(err){ alert("Ошибка: "+err.message); }
-      };
-    }
-
-    const editStats = document.getElementById("editStats");
-    if(editStats){
-      editStats.onsubmit = async (e)=>{
-        e.preventDefault();
-        const form = new FormData(editStats);
-        const body = {};
-        for(const [k,v] of form.entries()){ if(v) body[k] = isNaN(+v) ? v : +v; }
-        try{
-          await api(`/admin/leader/${id}/stats`, {method:"POST", body: JSON.stringify(body)});
-          route("leader", {id});
-        }catch(err){ alert("Ошибка: "+err.message); }
-      };
-    }
-    return;
-  }
-
-  if(name === "admin"){
-    if(!auth.token || auth.user?.role!=='admin'){
-      container.innerHTML = `<div class="max-w-md"><h2 class="text-2xl font-bold mb-3">Админ-панель</h2><p class="opacity-80 mb-3">Только для администраторов.</p><button class="px-4 py-2 bg-indigo-600 rounded" onclick="route('login')">Войти как админ</button></div>`;
-      return;
-    }
-    const users = await api("/admin/users");
-    const factions = await api("/factions");
-
-    container.innerHTML = `
-      <h2 class="text-2xl font-bold mb-4">Админ-панель</h2>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-          <div class="font-semibold mb-2">Пользователи (${users.length})</div>
-          <div class="overflow-x-auto">
-            <table class="min-w-full text-sm">
-              <thead class="bg-gray-800 text-gray-400">
-                <tr><th class="px-3 py-2 text-left">ID</th><th class="px-3 py-2 text-left">Логин</th><th class="px-3 py-2 text-left">Роль</th><th class="px-3 py-2 text-left">Фракция</th></tr>
-              </thead>
-              <tbody class="divide-y divide-gray-800">
-                ${users.map(u=>`<tr><td class="px-3 py-2">${u.id}</td><td class="px-3 py-2">${u.username}</td><td class="px-3 py-2">${u.role}</td><td class="px-3 py-2">${u.faction_id||''}</td></tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-          <div class="font-semibold mb-2">Создать пользователя</div>
-          <form id="createUser" class="grid grid-cols-1 gap-2 text-sm">
-            <input name="username" class="bg-gray-800 rounded px-3 py-2" placeholder="Логин" required>
-            <input type="password" name="password" class="bg-gray-800 rounded px-3 py-2" placeholder="Пароль" required>
-            <select name="role" class="bg-gray-800 rounded px-3 py-2" required>
-              <option value="leader">leader</option>
-              <option value="member">member</option>
-              <option value="admin">admin</option>
-            </select>
-            <select name="faction_id" class="bg-gray-800 rounded px-3 py-2">
-              <option value="">(нет)</option>
-              ${factions.map(f=>`<option value="${f.id}">${f.name}</option>`).join('')}
-            </select>
-            <button class="px-3 py-2 bg-emerald-600 rounded">Создать</button>
-          </form>
-        </section>
-      </div>`;
-
-    document.getElementById("createUser").onsubmit = async (e)=>{
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const body = Object.fromEntries(fd.entries());
-      if(body.faction_id === "") delete body.faction_id;
-      try{
-        await api("/auth/register", {method:"POST", body: JSON.stringify(body)});
-        route("admin");
-      }catch(err){ alert("Ошибка создания: "+err.message); }
-    };
-    return;
-  }
-
-  container.innerHTML = "<p>Неизвестный маршрут</p>";
-}
-</script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
