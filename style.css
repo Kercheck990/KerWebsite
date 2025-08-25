@@ -1,75 +1,44 @@
+/* style.css */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #1c1c1c;
-    color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #121212;
+  color: #fff;
 }
+
+.hidden { display: none; }
 
 header {
-    background: #2a2a2a;
-    padding: 15px;
-    text-align: center;
-    border-bottom: 2px solid #444;
+  display: flex;
+  justify-content: space-between;
+  background: #1e1e1e;
+  padding: 10px;
 }
 
-h1 {
-    margin: 0;
-    font-size: 28px;
-    color: #76ff7a;
+nav {
+  background: #2a2a2a;
+  padding: 10px;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0 0 0;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+nav button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
-nav a {
-    color: #f0f0f0;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+.login-screen {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 100px auto;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-nav a:hover {
-    color: #76ff7a;
+.login-screen input {
+  margin: 5px 0;
+  padding: 8px;
 }
 
-main {
-    padding: 20px;
-}
-
-.leader-card {
-    background: #2f2f2f;
-    padding: 15px;
-    margin: 10px auto;
-    border-radius: 10px;
-    max-width: 500px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    transition: 0.3s;
-}
-
-.leader-card:hover {
-    transform: scale(1.03);
-}
-
-.leader-name {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.leader-fraction {
-    font-size: 14px;
-    color: #aaa;
-}
-
-footer {
-    background: #2a2a2a;
-    text-align: center;
-    padding: 10px;
-    border-top: 2px solid #444;
-    margin-top: 20px;
-}
+.error { color: red; }
