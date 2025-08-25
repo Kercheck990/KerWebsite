@@ -12,11 +12,11 @@
     <aside class="w-60 bg-[#0b0d12] border-r border-gray-800 p-4 space-y-2">
       <h1 class="text-xl font-bold flex items-center gap-2"><span class="inline-block w-3 h-3 bg-gray-500 rounded"></span> Leaders</h1>
       <nav class="space-y-1">
-        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('leaders')">Р СѓРєРѕРІРѕРґСЃС‚РІРѕ</button>
-        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('admin')">РђРґРјРёРЅ-РїР°РЅРµР»СЊ</button>
-        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('login')">Р’РѕР№С‚Рё</button>
+        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('leaders')">Руководство</button>
+        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('admin')">Админ-панель</button>
+        <button class="w-full text-left px-3 py-2 rounded hover:bg-gray-800" onclick="route('login')">Войти</button>
       </nav>
-      <div class="pt-6 text-xs opacity-70">Р”РµРјРѕ-РїР°РЅРµР»СЊ (Grove & Ballas)</div>
+      <div class="pt-6 text-xs opacity-70">Демо-панель (Grove & Ballas)</div>
     </aside>
 
     <!-- Content -->
@@ -71,12 +71,12 @@ async function render(){
   if(name === "login"){
     container.innerHTML = `
       <div class="max-w-md">
-        <h2 class="text-2xl font-bold mb-4">Р’РѕР№С‚Рё</h2>
+        <h2 class="text-2xl font-bold mb-4">Войти</h2>
         <form id="loginForm" class="space-y-3">
-          <input class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2" name="username" placeholder="Р›РѕРіРёРЅ" required>
-          <input class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2" type="password" name="password" placeholder="РџР°СЂРѕР»СЊ" required>
-          <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded">Р’РѕР№С‚Рё</button>
-          <p class="text-xs opacity-70">Р”РµРјРѕ: admin/admin123 РёР»Рё grove_lead/demo123</p>
+          <input class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2" name="username" placeholder="Логин" required>
+          <input class="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2" type="password" name="password" placeholder="Пароль" required>
+          <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded">Войти</button>
+          <p class="text-xs opacity-70">Демо: admin/admin123 или grove_lead/demo123</p>
         </form>
       </div>`;
     document.getElementById("loginForm").onsubmit = async (e)=>{
@@ -86,7 +86,7 @@ async function render(){
         const data = await api("/auth/login",{method:"POST", body: JSON.stringify({username:f.get('username'), password:f.get('password')})});
         setAuth(data);
         route("leaders");
-      }catch(err){ alert("РћС€РёР±РєР° РІС…РѕРґР°: "+err.message); }
+      }catch(err){ alert("Ошибка входа: "+err.message); }
     };
     return;
   }
@@ -95,20 +95,20 @@ async function render(){
     const leaders = await api("/leaders");
     container.innerHTML = `
       <div class="flex items-center justify-between mb-4">
-        <h2 class="text-2xl font-bold">РЎРїРёСЃРѕРє СЂСѓРєРѕРІРѕРґРёС‚РµР»РµР№</h2>
-        <input id="search" class="bg-gray-900 border border-gray-700 rounded px-3 py-2" placeholder="РџРѕРёСЃРє РїРѕ РЅРёРєСѓ...">
+        <h2 class="text-2xl font-bold">Список руководителей</h2>
+        <input id="search" class="bg-gray-900 border border-gray-700 rounded px-3 py-2" placeholder="Поиск по нику...">
       </div>
       <div class="overflow-x-auto rounded-lg border border-gray-800">
         <table class="min-w-full text-sm">
           <thead class="bg-gray-900 text-gray-400">
             <tr>
               <th class="px-3 py-2 text-left">#</th>
-              <th class="px-3 py-2 text-left">Р СѓРєРѕРІРѕРґРёС‚РµР»СЊ</th>
-              <th class="px-3 py-2 text-left">Р¤СЂР°РєС†РёСЏ</th>
-              <th class="px-3 py-2 text-left">Р”РЅРё</th>
-              <th class="px-3 py-2 text-left">Р‘Р°Р»Р»С‹</th>
-              <th class="px-3 py-2 text-left">Р’С‹РіРѕРІ.</th>
-              <th class="px-3 py-2 text-left">РћРЅР»Р°Р№РЅ</th>
+              <th class="px-3 py-2 text-left">Руководитель</th>
+              <th class="px-3 py-2 text-left">Фракция</th>
+              <th class="px-3 py-2 text-left">Дни</th>
+              <th class="px-3 py-2 text-left">Баллы</th>
+              <th class="px-3 py-2 text-left">Выгов.</th>
+              <th class="px-3 py-2 text-left">Онлайн</th>
             </tr>
           </thead>
           <tbody id="tbody" class="divide-y divide-gray-800"></tbody>
@@ -145,7 +145,7 @@ async function render(){
         <section class="lg:col-span-2 space-y-4">
           <div class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
             <div class="flex items-center gap-4">
-              <div class="w-16 h-16 rounded-full bg-gray-800 overflow-hidden flex items-center justify-center text-2xl">рџ‘¤</div>
+              <div class="w-16 h-16 rounded-full bg-gray-800 overflow-hidden flex items-center justify-center text-2xl">👤</div>
               <div>
                 <div class="text-xl font-semibold">${user.username}</div>
                 <div class="text-sm opacity-70">${user.faction_name}</div>
@@ -153,29 +153,29 @@ async function render(){
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
               <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">РћРЅР»Р°Р№РЅ Р·Р° РЅРµРґРµР»СЋ</div>
+                <div class="text-xs opacity-70">Онлайн за неделю</div>
                 <div class="text-lg font-bold">${fmtTime(stats.online_seconds_week)}</div>
               </div>
               <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">РљРџР”</div>
+                <div class="text-xs opacity-70">КПД</div>
                 <div class="text-lg font-bold">${(stats.efficiency||0).toFixed(2)}</div>
               </div>
               <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ</div>
+                <div class="text-xs opacity-70">Предупреждения</div>
                 <div class="text-lg font-bold">${stats.cautions}/${stats.cautions_limit}</div>
               </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">РџСЂРёРЅСЏС‚Рѕ Р·Р° РЅРµРґРµР»СЋ</div>
+                <div class="text-xs opacity-70">Принято за неделю</div>
                 <div class="text-lg font-bold">${stats.accepted_week}</div>
               </div>
               <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">РџРѕРІС‹С€РµРЅРѕ Р·Р° РЅРµРґРµР»СЋ</div>
+                <div class="text-xs opacity-70">Повышено за неделю</div>
                 <div class="text-lg font-bold">${stats.promoted_week}</div>
               </div>
               <div class="bg-gray-800/60 rounded-xl p-4">
-                <div class="text-xs opacity-70">РЈРІРѕР»РµРЅРѕ Р·Р° РЅРµРґРµР»СЋ</div>
+                <div class="text-xs opacity-70">Уволено за неделю</div>
                 <div class="text-lg font-bold">${stats.fired_week}</div>
               </div>
             </div>
@@ -183,36 +183,36 @@ async function render(){
 
           <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
             <div class="px-5 py-3 border-b border-gray-800 flex items-center justify-between">
-              <div class="font-semibold">Р�Р·РјРµРЅРµРЅРёСЏ СЂСѓРєРѕРІРѕРґРёС‚РµР»СЏ</div>
+              <div class="font-semibold">Изменения руководителя</div>
               ${(auth.user && (auth.user.role==='admin' || auth.user.role==='leader'))?`<form id="addLog" class="flex gap-2">
-                <input name="msg" class="bg-gray-800 rounded px-3 py-1" placeholder="РќРѕРІРѕРµ РёР·РјРµРЅРµРЅРёРµ...">
-                <button class="px-3 py-1 bg-indigo-600 rounded">Р”РѕР±Р°РІРёС‚СЊ</button>
+                <input name="msg" class="bg-gray-800 rounded px-3 py-1" placeholder="Новое изменение...">
+                <button class="px-3 py-1 bg-indigo-600 rounded">Добавить</button>
               </form>`:""}
             </div>
             <div class="p-0">
-              ${logs.map(l=>`<div class="px-5 py-3 border-t border-gray-800 text-sm"><span class="opacity-70">${new Date(l.created_at).toLocaleString()}</span> вЂ” ${l.message}</div>`).join('')}
+              ${logs.map(l=>`<div class="px-5 py-3 border-t border-gray-800 text-sm"><span class="opacity-70">${new Date(l.created_at).toLocaleString()}</span> — ${l.message}</div>`).join('')}
             </div>
           </div>
         </section>
 
         <aside class="space-y-4">
           <div class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-            <div class="font-semibold mb-2">РћР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ</div>
+            <div class="font-semibold mb-2">Общая информация</div>
             <div class="grid grid-cols-2 gap-2 text-sm">
-              <div class="opacity-70">Р‘Р°Р»Р»С‹</div><div>${stats.points}</div>
-              <div class="opacity-70">Р”РЅРё</div><div>${stats.days_current}/${stats.days_total}</div>
-              <div class="opacity-70">Р’С‹РіРѕРІРѕСЂС‹</div><div>${stats.warns}/${stats.warns_limit}</div>
+              <div class="opacity-70">Баллы</div><div>${stats.points}</div>
+              <div class="opacity-70">Дни</div><div>${stats.days_current}/${stats.days_total}</div>
+              <div class="opacity-70">Выговоры</div><div>${stats.warns}/${stats.warns_limit}</div>
             </div>
           </div>
           ${auth.user?.role==='admin' ? `<div class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-            <div class="font-semibold mb-2">РђРґРјРёРЅ-СЂРµРґР°РєС‚РѕСЂ</div>
+            <div class="font-semibold mb-2">Админ-редактор</div>
             <form id="editStats" class="space-y-2 text-sm">
-              <input name="points" placeholder="Р‘Р°Р»Р»С‹" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="days_current" placeholder="Р”РЅРё (С‚РµРєСѓС‰РёРµ)" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="days_total" placeholder="Р”РЅРё (РІСЃРµРіРѕ)" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="warns" placeholder="Р’С‹РіРѕРІРѕСЂС‹" class="w-full bg-gray-800 rounded px-3 py-1">
-              <input name="online_seconds_week" placeholder="РћРЅР»Р°Р№РЅ (СЃРµРє)" class="w-full bg-gray-800 rounded px-3 py-1">
-              <button class="px-3 py-1 bg-emerald-600 rounded">РЎРѕС…СЂР°РЅРёС‚СЊ</button>
+              <input name="points" placeholder="Баллы" class="w-full bg-gray-800 rounded px-3 py-1">
+              <input name="days_current" placeholder="Дни (текущие)" class="w-full bg-gray-800 rounded px-3 py-1">
+              <input name="days_total" placeholder="Дни (всего)" class="w-full bg-gray-800 rounded px-3 py-1">
+              <input name="warns" placeholder="Выговоры" class="w-full bg-gray-800 rounded px-3 py-1">
+              <input name="online_seconds_week" placeholder="Онлайн (сек)" class="w-full bg-gray-800 rounded px-3 py-1">
+              <button class="px-3 py-1 bg-emerald-600 rounded">Сохранить</button>
             </form>
           </div>` : ""}
         </aside>
@@ -227,7 +227,7 @@ async function render(){
         try{
           await api(`/admin/leader/${id}/log`, {method:"POST", body: JSON.stringify({message: msg})});
           route("leader", {id});
-        }catch(err){ alert("РћС€РёР±РєР°: "+err.message); }
+        }catch(err){ alert("Ошибка: "+err.message); }
       };
     }
 
@@ -241,7 +241,7 @@ async function render(){
         try{
           await api(`/admin/leader/${id}/stats`, {method:"POST", body: JSON.stringify(body)});
           route("leader", {id});
-        }catch(err){ alert("РћС€РёР±РєР°: "+err.message); }
+        }catch(err){ alert("Ошибка: "+err.message); }
       };
     }
     return;
@@ -249,21 +249,21 @@ async function render(){
 
   if(name === "admin"){
     if(!auth.token || auth.user?.role!=='admin'){
-      container.innerHTML = `<div class="max-w-md"><h2 class="text-2xl font-bold mb-3">РђРґРјРёРЅ-РїР°РЅРµР»СЊ</h2><p class="opacity-80 mb-3">РўРѕР»СЊРєРѕ РґР»СЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРІ.</p><button class="px-4 py-2 bg-indigo-600 rounded" onclick="route('login')">Р’РѕР№С‚Рё РєР°Рє Р°РґРјРёРЅ</button></div>`;
+      container.innerHTML = `<div class="max-w-md"><h2 class="text-2xl font-bold mb-3">Админ-панель</h2><p class="opacity-80 mb-3">Только для администраторов.</p><button class="px-4 py-2 bg-indigo-600 rounded" onclick="route('login')">Войти как админ</button></div>`;
       return;
     }
     const users = await api("/admin/users");
     const factions = await api("/factions");
 
     container.innerHTML = `
-      <h2 class="text-2xl font-bold mb-4">РђРґРјРёРЅ-РїР°РЅРµР»СЊ</h2>
+      <h2 class="text-2xl font-bold mb-4">Админ-панель</h2>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <section class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-          <div class="font-semibold mb-2">РџРѕР»СЊР·РѕРІР°С‚РµР»Рё (${users.length})</div>
+          <div class="font-semibold mb-2">Пользователи (${users.length})</div>
           <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
               <thead class="bg-gray-800 text-gray-400">
-                <tr><th class="px-3 py-2 text-left">ID</th><th class="px-3 py-2 text-left">Р›РѕРіРёРЅ</th><th class="px-3 py-2 text-left">Р РѕР»СЊ</th><th class="px-3 py-2 text-left">Р¤СЂР°РєС†РёСЏ</th></tr>
+                <tr><th class="px-3 py-2 text-left">ID</th><th class="px-3 py-2 text-left">Логин</th><th class="px-3 py-2 text-left">Роль</th><th class="px-3 py-2 text-left">Фракция</th></tr>
               </thead>
               <tbody class="divide-y divide-gray-800">
                 ${users.map(u=>`<tr><td class="px-3 py-2">${u.id}</td><td class="px-3 py-2">${u.username}</td><td class="px-3 py-2">${u.role}</td><td class="px-3 py-2">${u.faction_id||''}</td></tr>`).join('')}
@@ -273,20 +273,20 @@ async function render(){
         </section>
 
         <section class="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-          <div class="font-semibold mb-2">РЎРѕР·РґР°С‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</div>
+          <div class="font-semibold mb-2">Создать пользователя</div>
           <form id="createUser" class="grid grid-cols-1 gap-2 text-sm">
-            <input name="username" class="bg-gray-800 rounded px-3 py-2" placeholder="Р›РѕРіРёРЅ" required>
-            <input type="password" name="password" class="bg-gray-800 rounded px-3 py-2" placeholder="РџР°СЂРѕР»СЊ" required>
+            <input name="username" class="bg-gray-800 rounded px-3 py-2" placeholder="Логин" required>
+            <input type="password" name="password" class="bg-gray-800 rounded px-3 py-2" placeholder="Пароль" required>
             <select name="role" class="bg-gray-800 rounded px-3 py-2" required>
               <option value="leader">leader</option>
               <option value="member">member</option>
               <option value="admin">admin</option>
             </select>
             <select name="faction_id" class="bg-gray-800 rounded px-3 py-2">
-              <option value="">(РЅРµС‚)</option>
+              <option value="">(нет)</option>
               ${factions.map(f=>`<option value="${f.id}">${f.name}</option>`).join('')}
             </select>
-            <button class="px-3 py-2 bg-emerald-600 rounded">РЎРѕР·РґР°С‚СЊ</button>
+            <button class="px-3 py-2 bg-emerald-600 rounded">Создать</button>
           </form>
         </section>
       </div>`;
@@ -299,12 +299,12 @@ async function render(){
       try{
         await api("/auth/register", {method:"POST", body: JSON.stringify(body)});
         route("admin");
-      }catch(err){ alert("РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ: "+err.message); }
+      }catch(err){ alert("Ошибка создания: "+err.message); }
     };
     return;
   }
 
-  container.innerHTML = "<p>РќРµРёР·РІРµСЃС‚РЅС‹Р№ РјР°СЂС€СЂСѓС‚</p>";
+  container.innerHTML = "<p>Неизвестный маршрут</p>";
 }
 </script>
 </body>
