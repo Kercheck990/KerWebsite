@@ -1,51 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Игровой Маркет</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лидеры Гетто</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Игровой Маркет</h1>
-    <button class="register-btn" onclick="toggleModal()">Регистрация</button>
-  </header>
+    <header>
+        <h1>Лидеры Гетто</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showFraction('grove')">Grove</a></li>
+                <li><a href="#" onclick="showFraction('ballas')">Ballas</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main class="container">
-    <select class="category-select" id="categorySelect" onchange="showItems()">
-      <option value="">Выберите категорию</option>
-      <option value="Машина">Машина</option>
-      <option value="Аксессуар">Аксессуар</option>
-      <option value="Дом">Дом</option>
-      <option value="Бизнес">Бизнес</option>
-      <option value="Услуги">Услуги</option>
-    </select>
+    <main>
+        <section id="leaders-container">
+            <!-- Лидеры будут подгружаться через JS -->
+        </section>
+    </main>
 
-    <div class="item-form" id="itemForm">
-      <input type="text" id="title" placeholder="Название предмета">
-      <textarea id="description" placeholder="Описание"></textarea>
-      <input type="number" id="price" placeholder="Цена (в игровых монетах)">
-      <button onclick="addItem()">Добавить</button>
-    </div>
+    <footer>
+        <p>Система для лидеров © 2025</p>
+    </footer>
 
-    <div class="item-list" id="itemList">
-      <h2>Объявления</h2>
-      <div id="itemsContainer"></div>
-    </div>
-  </main>
-
-  <div class="modal" id="registerModal">
-    <div class="modal-content">
-      <h3>Регистрация</h3>
-      <input type="text" placeholder="Ник" id="regName">
-      <input type="text" placeholder="Telegram @юзер" id="regTelegram">
-      <input type="password" placeholder="Пароль" id="regPassword">
-      <button onclick="registerUser()">Зарегистрироваться</button>
-      <div class="login-link">Уже есть аккаунт? <a href="#">Войти</a></div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
