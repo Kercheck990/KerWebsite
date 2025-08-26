@@ -5,7 +5,7 @@
 
     // --- НАСТРОЙКИ ДЛЯ ПРИВЯЗКИ ТГ ---
     const GITHUB_REPO = 'Kercheck990/KerWebsite';
-    const GITHUB_TOKEN = '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'; // !!! ВСТАВЬ СЮДА СВОЙ ТОКЕН !!!
+    const GITHUB_TOKEN = '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'; // !!! ВСТАВЬ СЮДА СВОЙ ТОКЕН !!!
     const PASSWORDS_FILE = 'passwords.json';
 
     // Тема
