@@ -12,11 +12,20 @@
 </head>
 <body>
   <!-- Полная модалка для привязки -->
-<div id="linkModal" class="modal">
+<!-- Полная модалка для привязки -->
+<div id="linkModal" class="modal hidden">
   <div class="modal-content">
     <h2>Привязка Telegram</h2>
     <p>Для использования панели необходимо привязать Telegram.</p>
-    <a id="linkBtn" class="btn">Привязать</a>
+    <a id="linkBtn" class="btn" target="_blank">Привязать</a>
+
+    <hr style="margin:16px 0">
+
+    <label for="codeInput">Введите код, который вы получили в Telegram:</label>
+    <input type="text" id="codeInput" class="input" placeholder="Введите код">
+    <button id="verifyBtn" class="btn" style="margin-top:10px;">Подтвердить код</button>
+
+    <p id="statusMsg" class="muted" style="margin-top:10px;"></p>
   </div>
 </div>
 
