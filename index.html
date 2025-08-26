@@ -11,6 +11,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Модалка для привязки -->
+  <div id="linkModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Привязка Telegram</h2>
+      <p>Для использования панели необходимо привязать Telegram.</p>
+      <a id="linkBtn" href="https://t.me/ТВОЙ_БОТ?start=privyazka" class="btn">Привязать</a>
+    </div>
+  </div>
+
   <aside class="sidebar">
     <div class="brand">
       <span class="logo">△</span>
@@ -53,5 +62,33 @@
 
   <script src="data.js"></script>
   <script src="main.js"></script>
+
+  <!-- Логика модалки -->
+  <script>
+    async function checkUser() {
+      try {
+        let res = await fetch("users.json"); // тянем с GitHub Pages или сервера
+        let users = await res.json();
+
+        let myId = localStorage.getItem("tg_id");
+        let modal = document.getElementById("linkModal");
+
+        if (!myId) {
+          modal.classList.remove("hidden");
+        } else {
+          let user = users.find(u => u.user_id == myId);
+          if (!user || !user.linked) {
+            modal.classList.remove("hidden");
+          } else {
+            modal.classList.add("hidden");
+          }
+        }
+      } catch (e) {
+        console.error("Ошибка загрузки users.json", e);
+      }
+    }
+
+    window.addEventListener("load", checkUser);
+  </script>
 </body>
 </html>
