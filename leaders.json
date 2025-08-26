@@ -1,4 +1,9 @@
 {
-  "Grove Street": [],
-  "Ballas Gang": []
+    "Grove Street": [
+        {
+            "nick": "Kercheck",
+            "telegram": "https://t.me/Kaesers2"
+        }
+    ],
+    "Ballas Gang": []
 }
