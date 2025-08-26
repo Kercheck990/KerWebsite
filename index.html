@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Модалка для привязки -->
-  <div id="linkModal" class="modal hidden">
+  <!-- Полная модалка для привязки -->
+  <div id="linkModal" class="modal">
     <div class="modal-content">
       <h2>Привязка Telegram</h2>
       <p>Для использования панели необходимо привязать Telegram.</p>
@@ -29,7 +29,6 @@
     <nav class="menu">
       <a href="#/" class="menu-item" data-icon="home">Главная</a>
       <div class="menu-sep"></div>
-
       <a href="#/profile/Roy_Shelby" class="menu-item" data-icon="user">Профиль</a>
       <a href="#/orgs" class="menu-item" data-icon="layers">Фракции</a>
       <a href="#/admin" class="menu-item" data-icon="shield">Администрация</a>
@@ -62,33 +61,6 @@
 
   <script src="data.js"></script>
   <script src="main.js"></script>
-
-  <!-- Логика модалки -->
-  <script>
-    async function checkUser() {
-      try {
-        let res = await fetch("users.json"); // тянем с GitHub Pages или сервера
-        let users = await res.json();
-
-        let myId = localStorage.getItem("tg_id");
-        let modal = document.getElementById("linkModal");
-
-        if (!myId) {
-          modal.classList.remove("hidden");
-        } else {
-          let user = users.find(u => u.user_id == myId);
-          if (!user || !user.linked) {
-            modal.classList.remove("hidden");
-          } else {
-            modal.classList.add("hidden");
-          }
-        }
-      } catch (e) {
-        console.error("Ошибка загрузки users.json", e);
-      }
-    }
-
-    window.addEventListener("load", checkUser);
-  </script>
+  <script src="auth.js"></script>
 </body>
 </html>
