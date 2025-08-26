@@ -1,43 +1,60 @@
 // auth.js — проверяет привязку Telegram и открывает модалку
-async function checkUser() {
+document.addEventListener("DOMContentLoaded", async () => {
+  const modal = document.getElementById("linkModal");
+  const linkBtn = document.getElementById("linkBtn");
+
+  // Генерация случайного кода для привязки
+  function generateCode() {
+    return Math.random().toString(36).substring(2, 10).toUpperCase();
+  }
+
+  // Проверка localStorage на привязку
+  let myId = localStorage.getItem("tg_id"); // сюда можно сохранять user_id после успешной привязки
+  let isLinked = localStorage.getItem("tg_linked") === "1";
+
   try {
+    // Загружаем актуальные данные пользователей
     let res = await fetch("users.json?_=" + Date.now()); // анти-кэш
     let users = await res.json();
 
-    let myId = localStorage.getItem("tg_id");
-    let modal = document.getElementById("linkModal");
-
-    // Если нет localStorage или пользователь не привязан → показываем модалку
-    if (!myId) {
-      modal.style.display = "flex";
-      return;
-    }
-
     let user = users.find(u => u.user_id == myId);
-    if (!user || !user.linked) {
-      modal.style.display = "flex";
+
+    // Если пользователь не найден или не привязан — показываем модалку
+    if (!myId || !user || !user.linked || !isLinked) {
+      modal.classList.remove("hidden");
+
+      // Генерируем уникальный код для привязки
+      const code = generateCode();
+      linkBtn.href = `https://t.me/obshalkaposlannikabot?start=privyazka_${code}`;
+
+      // Сохраняем код локально для последующей проверки
+      localStorage.setItem("tg_code", code);
+
+      // Обработчик успешной проверки
+      linkBtn.addEventListener("click", () => {
+        // Здесь код проверки будет после того, как пользователь введет код на сайте
+        // Пока просто скрываем модалку
+        modal.classList.add("hidden");
+      });
     } else {
-      modal.style.display = "none";
+      modal.classList.add("hidden");
     }
   } catch (e) {
     console.error("Ошибка загрузки users.json:", e);
-    document.getElementById("linkModal").style.display = "flex";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const modal = document.getElementById("linkModal");
-
-  // Проверяем через API, привязан ли пользователь
-  const res = await fetch("/api/check-linked"); // Сервер возвращает { linked: true/false }
-  const data = await res.json();
-
-  if (!data.linked) {
-    modal.classList.remove("hidden"); // Показываем модалку
-  } else {
-    modal.classList.add("hidden"); // Скрываем
+    modal.classList.remove("hidden");
   }
 });
 
-// Запуск при загрузке страницы
-window.addEventListener("load", checkUser);
+// Функция для проверки кода, который ввел пользователь на сайте
+async function verifyCode(inputCode) {
+  const storedCode = localStorage.getItem("tg_code");
+  if (inputCode === storedCode) {
+    localStorage.setItem("tg_linked", "1");
+    alert("✅ Привязка успешна!");
+    document.getElementById("linkModal").classList.add("hidden");
+    return true;
+  } else {
+    alert("❌ Код неверный");
+    return false;
+  }
+}
