@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ArzFun Leaders</title>
+  <meta name="description" content="ArzFun Leaders — панель лидеров организаций Grove Street и Ballas Gang" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="logo">△</span>
+      <span class="brand-text">ArzFun<br/>Leaders</span>
+    </div>
+
+    <nav class="menu">
+      <a href="#/" class="menu-item" data-icon="home">Главная</a>
+      <div class="menu-sep"></div>
+
+      <a href="#/profile/Roy_Shelby" class="menu-item" data-icon="user">Профиль</a>
+      <a href="#/orgs" class="menu-item" data-icon="layers">Фракции</a>
+      <a href="#/admin" class="menu-item" data-icon="shield">Администрация</a>
+      <a href="#/leaders" class="menu-item" data-icon="award">Руководство</a>
+      <a href="#/ranks" class="menu-item" data-icon="bar">Ранги</a>
+      <a href="#/archive" class="menu-item" data-icon="archive">Архив руководителей</a>
+      <a href="#/inactives" class="menu-item" data-icon="timer">Одобрение неактивов</a>
+      <a href="#/random" class="menu-item" data-icon="dice">Случайные ситуации</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button id="themeToggle" class="btn btn-ghost">🌓 Тема</button>
+      <div class="small">© ArzFun, 2025</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="breadcrumbs" id="breadcrumbs">Главная</div>
+      <div class="top-actions">
+        <a href="https://discord.com" target="_blank" class="btn btn-icon" title="Discord">💬</a>
+        <a href="https://vk.com" target="_blank" class="btn btn-icon" title="VK">VK</a>
+      </div>
+    </header>
+
+    <section id="app" class="view">
+      <!-- Контент маршрутов рисуется здесь -->
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
