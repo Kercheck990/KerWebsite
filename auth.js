@@ -1,7 +1,8 @@
 // auth.js — проверяет привязку Telegram и открывает модалку
 document.addEventListener("DOMContentLoaded", async () => {
   const modal = document.getElementById("linkModal");
-  const linkBtn = document.getElementById("linkBtn");
+  const codeContainer = document.getElementById("linkCode"); // элемент для показа кода
+  const linkBtn = document.getElementById("linkBtn"); // кнопка для перехода в Telegram
 
   // Генерация случайного кода для привязки
   function generateCode() {
@@ -25,16 +26,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // Генерируем уникальный код для привязки
       const code = generateCode();
-      linkBtn.href = `https://t.me/obshalkaposlannikabot?start=privyazka_${code}`;
 
       // Сохраняем код локально для последующей проверки
       localStorage.setItem("tg_code", code);
 
-      // Обработчик успешной проверки
+      // Показываем код на модалке
+      if (codeContainer) {
+        codeContainer.textContent = code; // предполагается <code id="linkCode"></code>
+      }
+
+      // Настраиваем кнопку перехода в Telegram с командой /start privyazka_<код>
+      linkBtn.href = `https://t.me/obshalkaposlannikabot?start=privyazka_${code}`;
+      linkBtn.textContent = "Перейти в Telegram";
+
+      // После возвращения на сайт пользователь вводит код, проверяем
       linkBtn.addEventListener("click", () => {
-        // Здесь код проверки будет после того, как пользователь введет код на сайте
-        // Пока просто скрываем модалку
-        modal.classList.add("hidden");
+        alert(`🔑 Скопируйте код: ${code} и вставьте на сайте для привязки`);
       });
     } else {
       modal.classList.add("hidden");
