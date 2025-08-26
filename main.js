@@ -5,7 +5,7 @@
 
     // --- НАСТРОЙКИ ДЛЯ ПРИВЯЗКИ ТГ ---
     const GITHUB_REPO = 'Kercheck990/KerWebsite';
-    const GITHUB_TOKEN = 'ТВОЙ_ТОКЕН_ЗДЕСЬ'; // !!! ВСТАВЬ СЮДА СВОЙ ТОКЕН !!!
+    const GITHUB_TOKEN = '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'; // !!! ВСТАВЬ СЮДА СВОЙ ТОКЕН !!!
     const PASSWORDS_FILE = 'passwords.json';
 
     // Тема
@@ -366,7 +366,7 @@
             if (linkTelegramBtn) {
                 linkTelegramBtn.addEventListener('click', () => {
                     const tempUserId = Math.random().toString(36).substring(2, 8);
-                    const botUrl = `https://t.me/Kercheck990Bot?start=privyazka_${tempUserId}`;
+                    const botUrl = f"https://t.me/obshalkaposlannikabot?start=privyazka_{tempUserId}";
                     window.location.href = botUrl;
                 });
             }
