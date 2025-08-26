@@ -25,5 +25,16 @@ async function checkUser() {
   }
 }
 
+let siteId = localStorage.getItem("site_id");
+if (!siteId) {
+  siteId = Math.random().toString(36).substring(2, 10); // уникальный ID
+  localStorage.setItem("site_id", siteId);
+}
+
+const btn = document.getElementById("linkBtn");
+if (btn) {
+  btn.href = `https://t.me/obshalkaposlannikabot?start=privyazka_${siteId}`;
+}
+
 // Запуск при загрузке страницы
 window.addEventListener("load", checkUser);
