@@ -1,1 +1,12 @@
-
+[
+  {
+    "user_id": 123456789,
+    "username": "Roy_Shelby",
+    "linked": true
+  },
+  {
+    "user_id": 987654321,
+    "username": "Kercheck",
+    "linked": false
+  }
+]
